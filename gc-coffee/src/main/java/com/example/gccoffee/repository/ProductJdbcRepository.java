@@ -57,7 +57,7 @@ public class ProductJdbcRepository implements ProductRepository {
 
     @Override
     public void deleteAll() {
-
+        jdbcTemplate.getJdbcTemplate().update("DELETE FROM products");
     }
 
     private static final RowMapper<Product> productRowMapper = (rs, rowNum) -> {
