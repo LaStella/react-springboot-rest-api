@@ -5,6 +5,7 @@ import com.example.gccoffee.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -28,5 +29,21 @@ public class ProductController {
         model.addAttribute("products", products);
         // product-list라는 템플릿을 찾게된다.
         return "product-list";
+    }
+
+    // /new-product 요청이 오면 해당 뷰를 렌더링
+    @GetMapping("/new-product")
+    public String newProductPage() {
+        return "new-product";
+    }
+
+    // /new-product에서 보낸 포스트메소드를 처리
+    @PostMapping("/products")
+    public String newProduct(CreateProductRequest createProductRequest) {
+        productService.createProduct(createProductRequest.productName(),
+                createProductRequest.category(),
+                createProductRequest.price(),
+                createProductRequest.description());
+        return "redirect:/products";
     }
 }
