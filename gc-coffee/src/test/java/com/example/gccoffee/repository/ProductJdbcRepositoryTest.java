@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,5 +61,14 @@ class ProductJdbcRepositoryTest {
     void testFindByCategory() {
         var product = repository.findByCategory(Category.COFFEBEAN_BEAN_PACKAGE);
         assertThat(product.isEmpty(), is(false));
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("상품을 전체 삭제한다.")
+    void testDeleteAll() {
+        repository.deleteAll();
+        var all = repository.findAll();
+        assertThat(all.isEmpty(), is(true));
     }
 }

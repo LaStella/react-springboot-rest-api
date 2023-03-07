@@ -78,7 +78,8 @@ public class ProductJdbcRepository implements ProductRepository {
 
     @Override
     public void deleteAll() {
-        jdbcTemplate.getJdbcTemplate().update("DELETE FROM products");
+        // 넘길 파라미터가 없으므로 빈 맵을 넘긴다.
+        jdbcTemplate.update("DELETE FROM products", Collections.emptyMap());
     }
 
     private static final RowMapper<Product> productRowMapper = (rs, rowNum) -> {
