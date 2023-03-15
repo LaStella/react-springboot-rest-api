@@ -1,9 +1,14 @@
 import React from "react";
 
 export function Product(props) {
+  const id = props.id;
   const productName = props.productName;
   const category = props.category;
   const price = props.price;
+  const handleAddBtnClicked = e => {
+    props.onAddClick(id);
+  };
+
   return (
       <>
         <div className="col-2">
@@ -15,7 +20,7 @@ export function Product(props) {
         </div>
         <div className="col text-center price">{price}원</div>
         <div className="col text-end action">
-          <button onClick={} className="btn btn-small btn-outline-dark" href="">추가</button>
+          <button onClick={handleAddBtnClicked} className="btn btn-small btn-outline-dark" href="">추가</button>
         </div>
       </>
   )
