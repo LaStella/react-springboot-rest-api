@@ -1,69 +1,32 @@
 package com.cnu.coffee;
 
+import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@Entity
+@Table(name = "products")
 public class Product {
-    private final Long productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 120, unique = true)
+    private String productId;
+    @Column(nullable = false)
     private String productName;
+    @Column(nullable = false)
     private Category category;
+    @Column(nullable = false)
     private long price;
     private String description;
-    private List<Review> reviews;
-    private final LocalDateTime createdAt;
+    @Column(nullable = false, updatable = false, insertable = false)
+    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    // 필수정보만 가지는 생성자
-    public Product(Long productId, String productName, Category category, long price) {
-        this.productId = productId;
-        this.productName = productName;
-        this.category = category;
-        this.price = price;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public Product(Long productId, String productName, Category category, long price, String description, List<Review> reviews, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.productId = productId;
-        this.productName = productName;
-        this.category = category;
-        this.price = price;
-        this.description = description;
-        this.reviews = reviews;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
 }
