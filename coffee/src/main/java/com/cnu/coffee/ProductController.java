@@ -1,9 +1,11 @@
 package com.cnu.coffee;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
@@ -11,10 +13,16 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @RequestMapping(value = "/save")
-    public String save(@RequestParam("name") String name, @RequestParam("category") Category category,@RequestParam("price") long price) {
-        productService.createProduct(name, category, price);
-        return "save";
+    @PostMapping("/products")
+    public ResponseEntity<ResponseProduct> createUser(@RequestBody RequestProduct product) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        ProductDto productDto = mapper.map(product, ProductDto.class);
+        productService.createProduct(productDto);
+
+        ResponseProduct responseProduct = mapper.map(productDto, ResponseProduct.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseProduct);
     }
 
     @RequestMapping(value = "/search")
