@@ -1,7 +1,6 @@
 package com.cnu.coffee;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +18,14 @@ public class ProductService {
     public Product createProduct(ProductDto productDto) {
         productDto.setProductId(UUID.randomUUID().toString());
 
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        Product product = mapper.map(productDto, Product.class);
+        Product product = new Product();
+        BeanUtils.copyProperties(productDto, product);
 
         return productRepository.save(product);
+    }
+
+    public Iterable<Product> getProductByAll() {
+        return productRepository.findAll();
     }
 
     public Product getProductById(Long idx) {
