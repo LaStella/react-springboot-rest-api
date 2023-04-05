@@ -1,7 +1,5 @@
 package com.cnu.coffee;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +31,17 @@ public class ProductController {
     public ResponseEntity<List<ResponseProduct>> getAllProducts() {
         Iterable<Product> productList = productService.getProductByAll();
 
+        return getListResponseEntity(productList);
+    }
+
+    @RequestMapping(value = "/search")
+    public ResponseEntity<List<ResponseProduct>> searchProduct(@RequestParam("name") String name) {
+        Iterable<Product> productList = productService.getProductByName(name);
+
+        return getListResponseEntity(productList);
+    }
+
+    private ResponseEntity<List<ResponseProduct>> getListResponseEntity(Iterable<Product> productList) {
         List<ResponseProduct> result = new ArrayList<>();
 
         productList.forEach(v -> {
@@ -42,10 +51,5 @@ public class ProductController {
         });
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
-
-    @RequestMapping(value = "/search")
-    public String search(@RequestParam("id") Long idx) {
-        return productService.getProductById(idx).getProductName();
     }
 }

@@ -31,4 +31,8 @@ public class ProductService {
     public Product getProductById(Long idx) {
         return productRepository.findById(idx).get();
     }
+
+    public Iterable<Product> getProductByName(String name) {
+        return productRepository.findByNameContaining(name);
+    }
 }
