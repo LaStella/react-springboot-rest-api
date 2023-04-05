@@ -19,7 +19,7 @@ public class Product {
     @Column(nullable = false, length = 120, unique = true)
     private String productId;
     @Column(nullable = false)
-    private String productName;
+    private String name;
     @Column(nullable = false)
     private Category category;
     @Column(nullable = false)
