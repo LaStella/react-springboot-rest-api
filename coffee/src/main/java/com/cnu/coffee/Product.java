@@ -5,8 +5,6 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -20,7 +18,7 @@ public class Product {
     private String productId;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
     @Column(nullable = false)
     private long price;
