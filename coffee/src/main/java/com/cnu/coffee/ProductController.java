@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,40 +15,22 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping("/products")
-    public ResponseEntity<ResponseProduct> createProduct(@RequestBody RequestProduct product) {
-        ProductDto productDto = new ProductDto();
-        BeanUtils.copyProperties(product, productDto);
-        productService.createProduct(productDto);
+    public ResponseEntity<ResponseProductDto> createProduct(@RequestBody RequestProductDto requestProductDto) {
+        productService.createProduct(requestProductDto);
 
-        ResponseProduct responseProduct = new ResponseProduct();
-        BeanUtils.copyProperties(productDto, responseProduct);
+        ResponseProductDto responseProductDto = new ResponseProductDto();
+        BeanUtils.copyProperties(requestProductDto, responseProductDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseProductDto);
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<ResponseProduct>> getAllProducts() {
-        Iterable<Product> productList = productService.getProductByAll();
-
-        return getListResponseEntity(productList);
+    public ResponseEntity<List<ResponseProductDto>> getAllProducts() {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductByAll());
     }
 
     @RequestMapping(value = "/search")
-    public ResponseEntity<List<ResponseProduct>> searchProduct(@RequestParam("name") String name) {
-        Iterable<Product> productList = productService.getProductByName(name);
-
-        return getListResponseEntity(productList);
-    }
-
-    private ResponseEntity<List<ResponseProduct>> getListResponseEntity(Iterable<Product> productList) {
-        List<ResponseProduct> result = new ArrayList<>();
-
-        productList.forEach(v -> {
-            ResponseProduct responseProduct = new ResponseProduct();
-            BeanUtils.copyProperties(v, responseProduct);
-            result.add(responseProduct);
-        });
-
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+    public ResponseEntity<List<ResponseProductDto>> searchProduct(@RequestParam("name") String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductByName(name));
     }
 }

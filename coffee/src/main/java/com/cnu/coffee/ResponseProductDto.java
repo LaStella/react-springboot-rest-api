@@ -3,7 +3,7 @@ package com.cnu.coffee;
 import lombok.Data;
 
 @Data
-public class ResponseProduct {
+public class ResponseProductDto {
     private String name;
     private Category category;
     private long price;
