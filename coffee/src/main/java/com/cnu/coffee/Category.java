@@ -1,4 +1,4 @@
-package com.cnu.coffee.product;
+package com.cnu.coffee;
 
 public enum Category {
     COFFEBEAN_BEAN_PACKAGE

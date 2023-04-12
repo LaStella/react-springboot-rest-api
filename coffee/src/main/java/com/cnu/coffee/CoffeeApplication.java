@@ -1,4 +1,4 @@
-package com.cnu.coffee.product;
+package com.cnu.coffee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
