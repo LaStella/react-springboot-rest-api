@@ -1,4 +1,4 @@
-package com.cnu.coffee;
+package com.cnu.coffee.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

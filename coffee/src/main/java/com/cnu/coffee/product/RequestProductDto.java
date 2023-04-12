@@ -1,10 +1,9 @@
-package com.cnu.coffee;
+package com.cnu.coffee.product;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 public class RequestProductDto {

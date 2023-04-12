@@ -1,4 +1,4 @@
-package com.cnu.coffee;
+package com.cnu.coffee.product;
 
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;

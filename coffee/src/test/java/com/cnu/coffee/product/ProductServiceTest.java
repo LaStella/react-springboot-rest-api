@@ -1,4 +1,4 @@
-package com.cnu.coffee;
+package com.cnu.coffee.product;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -34,6 +34,7 @@ class ProductServiceTest {
         productService.createProduct(requestProductDto);
 
         Product retrievedProduct = productRepository.findByProductId(requestProductDto.getProductId());
+        log.info("created at : {}", retrievedProduct.getCreatedAt());
         assertEquals(requestProductDto.getName(), retrievedProduct.getName());
     }
 }
