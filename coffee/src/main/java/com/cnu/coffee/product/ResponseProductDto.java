@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class ResponseProductDto {
+    private String productId;
     private String name;
     private Category category;
-    private long price;
+    private Integer price;
     private String description;
 }

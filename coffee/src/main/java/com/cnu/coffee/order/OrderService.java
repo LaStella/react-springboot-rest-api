@@ -1,42 +1,60 @@
 package com.cnu.coffee.order;
 
+import com.cnu.coffee.product.ProductRepository;
+import com.cnu.coffee.user.UserEntity;
+import com.cnu.coffee.user.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class OrderService {
     OrderRepository orderRepository;
+    ProductRepository productRepository;
+    UserRepository userRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
-    public Order createOrder(RequestOrderDto requestOrderDto) {
-        requestOrderDto.setOrderId(UUID.randomUUID().toString());
-
+    public ResponseOrderDto createOrder(OrderDto orderDto) {
+        orderDto.setOrderId(UUID.randomUUID().toString());
+        orderDto.setTotalPrice(orderDto.getUnitPrice() * orderDto.getQuantity());
+//        Product OrderedProduct = productRepository.findByProductId(requestOrderDto.getOrderedProductId());
+//        requestOrderDto.setUnitPrice(OrderedProduct.getPrice());
         Order order = new Order();
-        BeanUtils.copyProperties(requestOrderDto, order);
+        BeanUtils.copyProperties(orderDto, order);
+        order.setUserEntity(userRepository.findByUserId(orderDto.getUserId()));
+//        UserEntity userEntity = userRepository.findByUserId(orderDto.getUserId());
+//        userEntity.addOrder(order);
+//        order.setUserEntity(userEntity);
 
-        return orderRepository.save(order);
+
+        Order savedOrder = orderRepository.save(order);
+
+        ResponseOrderDto returnOrderDto = new ResponseOrderDto();
+        BeanUtils.copyProperties(savedOrder, returnOrderDto);
+
+        return returnOrderDto;
     }
 
+    public ResponseOrderDto getOrderByOrderId(String orderId) {
+        ResponseOrderDto returnValue = new ResponseOrderDto();
+        Order order = orderRepository.findByOrderId(orderId);
+        BeanUtils.copyProperties(order, returnValue);
 
-    public List<ResponseOrderDto> getOrderByAll() {
-        List<Order> orderList = orderRepository.findAll();
-
-        List<ResponseOrderDto> result = new ArrayList<>();
-        orderList.forEach(v -> {
-            ResponseOrderDto responseOrderDto = new ResponseOrderDto();
-            BeanUtils.copyProperties(v, responseOrderDto);
-            result.add(responseOrderDto);
-        });
-
-        return result;
+        return returnValue;
     }
+
+//    public List<Order> getOrdersByUserId(String userId) {
+//        UserEntity userEntity = userRepository.findByUserId(userId);
+//        return orderRepository.findByUserEntity(userEntity);
+//    }
 }
