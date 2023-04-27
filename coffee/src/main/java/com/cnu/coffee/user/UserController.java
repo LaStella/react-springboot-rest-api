@@ -50,9 +50,9 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<ResponseUserDto> getUsers(@PathVariable("userId") String userId) {
-        ResponseUserDto responseUserDto = userService.getUserByUserId(userId);
+    public ResponseEntity<UserEntity> getUsers(@PathVariable("userId") String userId) {
+        UserEntity userEntity = userService.getUserByUserId(userId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userEntity);
     }
 }

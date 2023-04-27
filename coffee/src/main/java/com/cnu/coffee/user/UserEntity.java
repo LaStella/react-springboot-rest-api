@@ -25,10 +25,10 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, unique = true)
     private String encryptedPassword;
 
-//    @OneToMany(mappedBy = "userEntity")
-//    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "userEntity")
+    private List<Order> orders = new ArrayList<>();
 
-//    public void addOrder(Order order) {
-//        order.setUserEntity(this);
-//    }
+    public void addOrder(Order order) {
+        order.setUserEntity(this);
+    }
 }

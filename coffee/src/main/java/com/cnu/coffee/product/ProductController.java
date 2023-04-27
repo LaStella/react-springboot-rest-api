@@ -19,11 +19,11 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<ResponseProductDto> createProduct(@RequestBody RequestProductDto requestProductDto) {
-        productService.createProduct(requestProductDto);
+    public ResponseEntity<ResponseProductDto> createProduct(@RequestBody ProductDto productDto) {
+        productService.createProduct(productDto);
 
         ResponseProductDto responseProductDto = new ResponseProductDto();
-        BeanUtils.copyProperties(requestProductDto, responseProductDto);
+        BeanUtils.copyProperties(productDto, responseProductDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseProductDto);
     }

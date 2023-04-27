@@ -11,6 +11,5 @@ public class ResponseUserDto {
     private String email;
     private String name;
     private String userId;
-
-    private List<ResponseBookmarkDto> bookmarks;
+    private List<ResponseReviewDto> bookmarks;
 }

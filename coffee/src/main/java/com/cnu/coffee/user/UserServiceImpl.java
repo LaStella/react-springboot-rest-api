@@ -7,12 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     BCryptPasswordEncoder passwordEncoder;
@@ -41,19 +43,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseUserDto getUserByUserId(String userId) {
+    public UserEntity getUserByUserId(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
 
         if (userEntity == null)
             throw new UsernameNotFoundException("User not found");
 
-        ResponseUserDto responseUserDto = new ResponseUserDto();
-        BeanUtils.copyProperties(userEntity, responseUserDto);
+//        UserDto userDto = new UserDto();
+//        BeanUtils.copyProperties(userEntity, userDto);
+//
+//        List<ResponseReviewDto> reviews = new ArrayList<>();
+//        userDto.setReviews(reviews);
 
-        List<ResponseBookmarkDto> bookmarks = new ArrayList<>();
-        responseUserDto.setBookmarks(bookmarks);
-
-        return responseUserDto;
+        return userEntity;
     }
 
     @Override

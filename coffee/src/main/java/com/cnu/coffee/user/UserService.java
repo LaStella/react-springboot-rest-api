@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     ResponseUserDto createUser(UserDto userDto);
 
-    ResponseUserDto getUserByUserId(String userId);
+    UserEntity getUserByUserId(String userId);
 
     List<UserEntity> getUserByAll();
 

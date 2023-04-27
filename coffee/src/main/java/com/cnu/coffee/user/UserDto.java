@@ -1,5 +1,6 @@
 package com.cnu.coffee.user;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -27,5 +28,5 @@ public class UserDto {
 
     private String encryptedPwd;
 
-    private List<ResponseBookmarkDto> bookmarks;
+    private List<ResponseReviewDto> reviews;
 }
