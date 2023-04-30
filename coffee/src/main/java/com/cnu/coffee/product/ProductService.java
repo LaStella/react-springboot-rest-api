@@ -17,11 +17,11 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product createProduct(RequestProductDto requestProductDto) {
-        requestProductDto.setProductId(UUID.randomUUID().toString());
+    public Product createProduct(ProductDto productDto) {
+        productDto.setProductId(UUID.randomUUID().toString());
 
         Product product = new Product();
-        BeanUtils.copyProperties(requestProductDto, product);
+        BeanUtils.copyProperties(productDto, product);
 
         return productRepository.save(product);
     }

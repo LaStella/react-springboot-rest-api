@@ -18,23 +18,20 @@ class ProductServiceTest {
 
     @Autowired
     ProductService productService;
-    @Autowired
-    ProductRepository productRepository;
 
     @Test
     @DisplayName("상품 생성 테스트")
     public void testCreateProduct() {
-        RequestProductDto requestProductDto = new RequestProductDto();
-        requestProductDto.setProductId(UUID.randomUUID().toString());
-        requestProductDto.setName("aaa");
-        requestProductDto.setCategory(Category.COFFEBEAN_BEAN_PACKAGE);
-        requestProductDto.setPrice(1000L);
-        requestProductDto.setDescription("bbb");
+        ProductDto productDto = new ProductDto();
+        productDto.setProductId(UUID.randomUUID().toString());
+        productDto.setName("aaa");
+        productDto.setCategory(Category.COFFEBEAN_BEAN_PACKAGE);
+        productDto.setPrice(1000L);
+        productDto.setDescription("bbb");
 
-        productService.createProduct(requestProductDto);
+        Product savedProduct = productService.createProduct(productDto);
 
-        Product retrievedProduct = productRepository.findByProductId(requestProductDto.getProductId());
-        log.info("created at : {}", retrievedProduct.getCreatedAt());
-        assertEquals(requestProductDto.getName(), retrievedProduct.getName());
+        log.info("created at : {}", savedProduct.getCreatedAt());
+        assertEquals(productDto.getName(), savedProduct.getName());
     }
 }
